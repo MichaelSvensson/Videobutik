@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c035dd7212e2447ca3a6ae01c4321526" Name="Diagram1">
+        <EntityTypeShape EntityType="VideoStoreModel.Customers" Width="1.5" PointX="1.375" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VideoStoreModel.Moviegenre" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VideoStoreModel.Movies" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="VideoStoreModel.Rental" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="VideoStoreModel.sysdiagrams" Width="1.5" PointX="7" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="VideoStoreModel.FK__Rental__Customer__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="VideoStoreModel.FK__Movies__GenreId__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="VideoStoreModel.FK__Rental__MovieId__36B12243" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

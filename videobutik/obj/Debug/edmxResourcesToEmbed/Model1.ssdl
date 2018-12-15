@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VideoStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Adress" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ZipCode" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="City" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="SocialSecurityNumber" Type="varchar" MaxLength="11" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Moviegenre">
+    <Key>
+      <PropertyRef Name="GenreId" />
+    </Key>
+    <Property Name="GenreId" Type="int" Nullable="false" />
+    <Property Name="GenreCategory" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Movies">
+    <Key>
+      <PropertyRef Name="MovieId" />
+    </Key>
+    <Property Name="MovieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ReleaseDate" Type="date" />
+    <Property Name="Price" Type="float" />
+    <Property Name="GenreId" Type="int" />
+  </EntityType>
+  <EntityType Name="Rental">
+    <Key>
+      <PropertyRef Name="RentalId" />
+    </Key>
+    <Property Name="RentalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="MovieId" Type="int" />
+    <Property Name="RentOut" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__Movies__GenreId__32E0915F">
+    <End Role="Moviegenre" Type="Self.Moviegenre" Multiplicity="0..1" />
+    <End Role="Movies" Type="Self.Movies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Moviegenre">
+        <PropertyRef Name="GenreId" />
+      </Principal>
+      <Dependent Role="Movies">
+        <PropertyRef Name="GenreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rental__Customer__35BCFE0A">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+    <End Role="Rental" Type="Self.Rental" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="Rental">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rental__MovieId__36B12243">
+    <End Role="Movies" Type="Self.Movies" Multiplicity="0..1" />
+    <End Role="Rental" Type="Self.Rental" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movies">
+        <PropertyRef Name="MovieId" />
+      </Principal>
+      <Dependent Role="Rental">
+        <PropertyRef Name="MovieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="VideoStoreModelStoreContainer">
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Moviegenre" EntityType="Self.Moviegenre" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Movies" EntityType="Self.Movies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rental" EntityType="Self.Rental" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Movies__GenreId__32E0915F" Association="Self.FK__Movies__GenreId__32E0915F">
+      <End Role="Moviegenre" EntitySet="Moviegenre" />
+      <End Role="Movies" EntitySet="Movies" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rental__Customer__35BCFE0A" Association="Self.FK__Rental__Customer__35BCFE0A">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Rental" EntitySet="Rental" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rental__MovieId__36B12243" Association="Self.FK__Rental__MovieId__36B12243">
+      <End Role="Movies" EntitySet="Movies" />
+      <End Role="Rental" EntitySet="Rental" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

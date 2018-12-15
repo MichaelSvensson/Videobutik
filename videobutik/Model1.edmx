@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="VideoStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Adress" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="SocialSecurityNumber" Type="varchar" MaxLength="11" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Moviegenre">
+          <Key>
+            <PropertyRef Name="GenreId" />
+          </Key>
+          <Property Name="GenreId" Type="int" Nullable="false" />
+          <Property Name="GenreCategory" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Movies">
+          <Key>
+            <PropertyRef Name="MovieId" />
+          </Key>
+          <Property Name="MovieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="ReleaseDate" Type="date" />
+          <Property Name="Price" Type="float" />
+          <Property Name="GenreId" Type="int" />
+        </EntityType>
+        <EntityType Name="Rental">
+          <Key>
+            <PropertyRef Name="RentalId" />
+          </Key>
+          <Property Name="RentalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="MovieId" Type="int" />
+          <Property Name="RentOut" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__Movies__GenreId__32E0915F">
+          <End Role="Moviegenre" Type="Self.Moviegenre" Multiplicity="0..1" />
+          <End Role="Movies" Type="Self.Movies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moviegenre">
+              <PropertyRef Name="GenreId" />
+            </Principal>
+            <Dependent Role="Movies">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rental__Customer__35BCFE0A">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Rental" Type="Self.Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Rental">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rental__MovieId__36B12243">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="0..1" />
+          <End Role="Rental" Type="Self.Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="MovieId" />
+            </Principal>
+            <Dependent Role="Rental">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VideoStoreModelStoreContainer">
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Moviegenre" EntityType="Self.Moviegenre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movies" EntityType="Self.Movies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rental" EntityType="Self.Rental" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Movies__GenreId__32E0915F" Association="Self.FK__Movies__GenreId__32E0915F">
+            <End Role="Moviegenre" EntitySet="Moviegenre" />
+            <End Role="Movies" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rental__Customer__35BCFE0A" Association="Self.FK__Rental__Customer__35BCFE0A">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Rental" EntitySet="Rental" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rental__MovieId__36B12243" Association="Self.FK__Rental__MovieId__36B12243">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="Rental" EntitySet="Rental" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VideoStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Adress" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SocialSecurityNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Rental" Relationship="Self.FK__Rental__Customer__35BCFE0A" FromRole="Customers" ToRole="Rental" />
+        </EntityType>
+        <EntityType Name="Moviegenre">
+          <Key>
+            <PropertyRef Name="GenreId" />
+          </Key>
+          <Property Name="GenreId" Type="Int32" Nullable="false" />
+          <Property Name="GenreCategory" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Movies" Relationship="Self.FK__Movies__GenreId__32E0915F" FromRole="Moviegenre" ToRole="Movies" />
+        </EntityType>
+        <EntityType Name="Movies">
+          <Key>
+            <PropertyRef Name="MovieId" />
+          </Key>
+          <Property Name="MovieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ReleaseDate" Type="DateTime" Precision="0" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="GenreId" Type="Int32" />
+          <NavigationProperty Name="Moviegenre" Relationship="Self.FK__Movies__GenreId__32E0915F" FromRole="Movies" ToRole="Moviegenre" />
+          <NavigationProperty Name="Rental" Relationship="Self.FK__Rental__MovieId__36B12243" FromRole="Movies" ToRole="Rental" />
+        </EntityType>
+        <EntityType Name="Rental">
+          <Key>
+            <PropertyRef Name="RentalId" />
+          </Key>
+          <Property Name="RentalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MovieId" Type="Int32" />
+          <Property Name="RentOut" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK__Rental__Customer__35BCFE0A" FromRole="Rental" ToRole="Customers" />
+          <NavigationProperty Name="Movies" Relationship="Self.FK__Rental__MovieId__36B12243" FromRole="Rental" ToRole="Movies" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__Rental__Customer__35BCFE0A">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Rental" Type="Self.Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Rental">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Movies__GenreId__32E0915F">
+          <End Role="Moviegenre" Type="Self.Moviegenre" Multiplicity="0..1" />
+          <End Role="Movies" Type="Self.Movies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moviegenre">
+              <PropertyRef Name="GenreId" />
+            </Principal>
+            <Dependent Role="Movies">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rental__MovieId__36B12243">
+          <End Role="Movies" Type="Self.Movies" Multiplicity="0..1" />
+          <End Role="Rental" Type="Self.Rental" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="MovieId" />
+            </Principal>
+            <Dependent Role="Rental">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VideoStoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customers" />
+          <EntitySet Name="Moviegenre" EntityType="Self.Moviegenre" />
+          <EntitySet Name="Movies" EntityType="Self.Movies" />
+          <EntitySet Name="Rental" EntityType="Self.Rental" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK__Rental__Customer__35BCFE0A" Association="Self.FK__Rental__Customer__35BCFE0A">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Rental" EntitySet="Rental" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Movies__GenreId__32E0915F" Association="Self.FK__Movies__GenreId__32E0915F">
+            <End Role="Moviegenre" EntitySet="Moviegenre" />
+            <End Role="Movies" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rental__MovieId__36B12243" Association="Self.FK__Rental__MovieId__36B12243">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="Rental" EntitySet="Rental" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VideoStoreModelStoreContainer" CdmEntityContainer="VideoStoreEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="VideoStoreModel.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="SocialSecurityNumber" ColumnName="SocialSecurityNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Moviegenre">
+            <EntityTypeMapping TypeName="VideoStoreModel.Moviegenre">
+              <MappingFragment StoreEntitySet="Moviegenre">
+                <ScalarProperty Name="GenreId" ColumnName="GenreId" />
+                <ScalarProperty Name="GenreCategory" ColumnName="GenreCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="VideoStoreModel.Movies">
+              <MappingFragment StoreEntitySet="Movies">
+                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="GenreId" ColumnName="GenreId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rental">
+            <EntityTypeMapping TypeName="VideoStoreModel.Rental">
+              <MappingFragment StoreEntitySet="Rental">
+                <ScalarProperty Name="RentalId" ColumnName="RentalId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
+                <ScalarProperty Name="RentOut" ColumnName="RentOut" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="VideoStoreModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
