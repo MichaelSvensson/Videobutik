@@ -15,10 +15,32 @@ namespace videobutik.Controllers
         private VideoStoreEntities db = new VideoStoreEntities();
 
         // GET: Movies
-        public ActionResult Index()
+        public ActionResult Index(string search, string sortOrder)
         {
-            var movies = db.Movies.Include(m => m.Moviegenre);
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : " ";
+
+            var movies = from m in db.Movies
+                         select m;
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                movies = movies.Where(s => s.Title.Contains(search));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    movies = movies.OrderByDescending(s => s.Title);
+                    break;
+                default:
+                    movies = movies.OrderBy(s => s.Title);
+                    break;
+            }
+            
             return View(movies.ToList());
+
+            //var movies = db.Movies.Include(m => m.Moviegenre);
+            //return View(movies.ToList());
         }
 
         // GET: Movies/Details/5

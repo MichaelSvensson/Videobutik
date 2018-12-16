@@ -15,9 +15,23 @@ namespace videobutik.Controllers
         private VideoStoreEntities db = new VideoStoreEntities();
 
         // GET: Customers
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            return View(db.Customers.ToList());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : " ";
+            var customers = from s in db.Customers
+                            select s;
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    customers = customers.OrderByDescending(s => s.LastName);
+                    break;
+                default:
+                    customers = customers.OrderBy(s => s.LastName);
+                    break;
+            }
+            return View(customers.ToList());
+            // return View(db.Customers.ToList());
         }
 
         // GET: Customers/Details/5
